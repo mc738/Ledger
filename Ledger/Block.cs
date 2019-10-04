@@ -4,15 +4,15 @@ using System.Text;
 
 namespace Ledger
 {
-    public class Block<T>
+    public class Block<T> : IBlock<T>
     {
         private readonly int difficulty;
 
         private int index { get; set; }
         private DateTime timestamp { get; set; }
         private string previousHash { get; set; }
-        private string hash{ get; set; }
-        private T data { get; set; }
+        private string hash { get; set; }
+        private IEntry<T> data { get; set; }
         private int nonce { get; set; } = 0;
 
 
@@ -20,29 +20,39 @@ namespace Ledger
         public DateTime Timestamp => timestamp;
         public string PreviousHash => previousHash;
         public string Hash => hash;
-        public T Data => data;
+        public T Data => data.Data;
+        public IEntry<T> Entry => data;
         public int Nonce => nonce;
-
 
         public Block(int index, DateTime timeStamp, string previousHash, T data, int difficulty)
         {
             this.index = index;
             this.timestamp = timeStamp;
             this.previousHash = previousHash;
-            this.data = data;
+            this.data = Entry<T>.Create(data);
             this.difficulty = difficulty;
             hash = CalculateHash();
         }
 
-        public static Block<T> Create(Block<T> previousBlock, T data, int difficulty)
+        public static IBlock<T> Create(IBlock<T> previousBlock, T data, int difficulty)
         {
-            var block = new Block<T>(previousBlock.index + 1, DateTime.Now, previousBlock.Hash, data, difficulty);
+            var block = new Block<T>(previousBlock.Index + 1, DateTime.Now, previousBlock.Hash, data, difficulty);
 
             return block;
         }
 
-   
-        public string CalculateHash()
+        public static IBlock<T> Create(IBlock<T> previousBlock, T data, int difficulty, DateTime timestamp, int nonce)
+        {
+            var block = new Block<T>(previousBlock.Index + 1, timestamp, previousBlock.Hash, data, difficulty);
+
+
+            block.GenerateHash(difficulty, nonce);
+
+            return block;
+        }
+
+
+        private string CalculateHash()
         {
             SHA256 sha256 = SHA256.Create();
 
@@ -54,7 +64,7 @@ namespace Ledger
 
         public void Mine()
         {
-            var leadingZeros = new string('0',  difficulty);
+            var leadingZeros = new string('0', difficulty);
             while (this.Hash == null || this.Hash.Substring(0, difficulty) != leadingZeros)
             {
                 this.nonce++;
@@ -76,7 +86,7 @@ namespace Ledger
         }
 
 
-        public bool Validate(Block<T> block)
+        public bool Validate(IBlock<T> block)
         {
             var temp = new Block<T>(Index, Timestamp, PreviousHash, block.Data, difficulty);
 
@@ -85,7 +95,7 @@ namespace Ledger
             return temp.Hash == Hash;
         }
 
-        public bool Validate(SignedData<T> data)
+        public bool Validate(ISignedData<T> data)
         {
             var temp = new Block<T>(Index, Timestamp, PreviousHash, data.Data, difficulty);
 

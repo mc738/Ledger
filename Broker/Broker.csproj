@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ledger\Ledger.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Monix">
+      <HintPath>..\..\..\..\Documents\GitHub\Monix\Monix\bin\Debug\netstandard2.0\Monix.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
