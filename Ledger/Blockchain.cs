@@ -61,6 +61,32 @@ namespace Ledger
             return chain;
         }
 
+
+        public void LoadFromJson(string json)
+        {
+            var jObject = JObject.Parse(json);
+
+            chain.Clear();
+
+            //chain = new Blockchain<T>(jObject["difficulty"].ToObject<int>(), false);
+
+            foreach (var item in jObject["blocks"])
+            {
+                if (item["index"].ToObject<int>() == 0)
+                {
+                    var date = item["timestamp"].ToObject<DateTime>();
+
+                    AddGenesisBlock(date);
+                }
+                else
+                {
+                    AddBlock(Block<T>.Create(Last, item["data"].ToObject<T>(), difficulty, item["timestamp"].ToObject<DateTime>(), item["nonce"].ToObject<int>()));
+
+                }
+
+            }
+        }
+
         public string ToJson()
         {
             var jObject = new JObject();
@@ -75,7 +101,10 @@ namespace Ledger
 
                 blockObj.Add("index", block.Index);
                 blockObj.Add("timestamp", block.Timestamp);
-                blockObj.Add("data", JToken.FromObject(block.Data));
+
+                if (block.Data != null)
+                    blockObj.Add("data", JToken.FromObject(block.Data));
+
                 blockObj.Add("nonce", block.Nonce);
                 blockObj.Add("hash", block.Hash);
                 blockObj.Add("previousHash", block.PreviousHash);

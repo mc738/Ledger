@@ -26,5 +26,6 @@ namespace Ledger
         string ToString();
         bool ValidateBlock(IBlock<T> block);
         bool ValidateData(ISignedData<T> data);
+        void LoadFromJson(string json);
     }
 }

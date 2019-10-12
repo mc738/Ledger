@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ledger", "Ledger\Ledger.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "TestConsole\TestConsole.csproj", "{72DEEA4A-7E21-4647-888A-E986EDCCF752}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Broker", "Broker\Broker.csproj", "{C0921885-BAE6-40E9-9FF2-27D665C8BB75}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{018B5EF4-6E90-45BD-828D-DE66CB167D98}"
 	ProjectSection(SolutionItems) = preProject
 		FakeChain.json = FakeChain.json
@@ -29,10 +27,6 @@ Global
 		{72DEEA4A-7E21-4647-888A-E986EDCCF752}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72DEEA4A-7E21-4647-888A-E986EDCCF752}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72DEEA4A-7E21-4647-888A-E986EDCCF752}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C0921885-BAE6-40E9-9FF2-27D665C8BB75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C0921885-BAE6-40E9-9FF2-27D665C8BB75}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C0921885-BAE6-40E9-9FF2-27D665C8BB75}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C0921885-BAE6-40E9-9FF2-27D665C8BB75}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
